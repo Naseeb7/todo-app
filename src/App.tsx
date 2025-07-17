@@ -1,7 +1,8 @@
-import "./App.css";
+import React from "react";
+import TodoApp from "./components/TodoApp";
 
-function App() {
-  return <></>;
-}
+const App: React.FC = () => {
+  return <TodoApp />;
+};
 
 export default App;
