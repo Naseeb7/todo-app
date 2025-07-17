@@ -2,4 +2,9 @@
 
 @theme {
   --color-primary-100: #033487;
+  --color-background-100: #eff3f4;
+  --color-background-200: #ebeff5;
+  --color-background-300: #ebeff6;
+  --color-background-400: #f6f6f6;
+  --color-border-100: #dddddd;
 }

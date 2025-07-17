@@ -1,27 +1,30 @@
 import React from "react";
+import { Filters } from "../utils/defaultStates";
 
 interface Props {
   currentFilter: string;
   onChange: (filter: string) => void;
 }
 
-const filters = ["all", "completed", "pending"];
-
 const Filter: React.FC<Props> = ({ currentFilter, onChange }) => {
   return (
-    <div className="flex justify-center gap-4 mb-4">
-      {filters.map((f) => (
-        <button
-          key={f}
-          onClick={() => onChange(f)}
-          className={`px-4 py-2 rounded-md ${
-            currentFilter === f
-              ? "bg-blue-500 text-white"
-              : "bg-gray-100 text-gray-800"
+    <div className="flex flex-col gap-3 w-full">
+      {Filters.map((f) => (
+        <div
+          key={f.value}
+          onClick={() => onChange(f.value)}
+          className={` flex w-full p-3 rounded-xl hover:cursor-pointer group text-lg font-semibold ${
+            currentFilter === f.value ? "bg-background-200 " : "bg-white"
           }`}
         >
-          {f[0].toUpperCase() + f.slice(1)}
-        </button>
+          <span
+            className={`transition-all duration-200 ${
+              currentFilter === f.value ? "" : "group-hover:scale-105"
+            }`}
+          >
+            {f.label}
+          </span>
+        </div>
       ))}
     </div>
   );

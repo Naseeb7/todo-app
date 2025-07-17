@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./UI/Button";
 
 interface Props {
   onAdd: (text: string) => void;
@@ -15,20 +16,17 @@ const AddTodo: React.FC<Props> = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+    <form onSubmit={handleSubmit} className="flex gap-2">
       <input
         type="text"
-        className="flex-1 p-2 border rounded-md outline-none"
-        placeholder="Add a new task..."
+        className="flex-1 p-2 bg-white border border-gray-600 rounded-lg outline-none"
+        placeholder="Do some laundry in the evening..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-      >
-        Add
-      </button>
+      <div className="w-1/6">
+        <Button type="submit" text="Add Task" />
+      </div>
     </form>
   );
 };

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
 import Filter from "./Filter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import type { Todo } from "../types/todo";
-import { filterTodos } from "../utils/filter";
+import { filterTodos } from "../utils/filter.ut";
 
 const TodoApp: React.FC = () => {
   const [todos, setTodos] = useLocalStorage<Todo[]>("todos", []);
@@ -38,20 +38,27 @@ const TodoApp: React.FC = () => {
     );
   };
 
-  const filteredTodos = filterTodos(todos, filter);
+  const filteredTodos = useMemo(() => {
+    return filterTodos(todos, filter);
+  }, [todos, filter]);
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4 bg-gray-100 rounded-md shadow-md">
-      <h1 className="text-2xl font-bold text-center mb-6">My To-Do List</h1>
-      <AddTodo onAdd={addTodo} />
-      <Filter currentFilter={filter} onChange={setFilter} />
-      <TodoList
-        todos={filteredTodos}
-        onToggle={toggleTodo}
-        onDelete={deleteTodo}
-        onEdit={editTodo}
-      />
-    </div>
+    <main className="flex min-h-screen">
+      <div className="flex flex-col w-1/5 px-5 py-8 gap-8">
+        <h1 className="text-2xl font-bold">To-Do List</h1>
+        <Filter currentFilter={filter} onChange={setFilter} />
+      </div>
+      <div className="flex flex-col bg-background-100 w-4/5 px-10 py-16 gap-8">
+        <AddTodo onAdd={addTodo} />
+        <TodoList
+          todos={filteredTodos}
+          onToggle={toggleTodo}
+          onDelete={deleteTodo}
+          onEdit={editTodo}
+          currentFilter={filter}
+        />
+      </div>
+    </main>
   );
 };
 
