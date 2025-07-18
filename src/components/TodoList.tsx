@@ -32,7 +32,7 @@ const TodoList: React.FC<Props> = ({
     }
   }, [currentFilter]);
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       {todos.length === 0 ? (
         <p className="text-center text-gray-400 text-xl font-semibold">
           {noTaskText}

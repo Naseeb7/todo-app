@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { Todo } from "../types/todo";
 import Modal from "./UI/Modal";
 import Button from "./UI/Button";
@@ -17,6 +17,26 @@ const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete, onEdit }) => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [editText, setEditText] = useState(todo.text);
+  const optionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        optionsRef.current &&
+        !optionsRef.current.contains(event.target as Node)
+      ) {
+        setShowOptions(false);
+      }
+    };
+
+    if (showOptions) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOptions]);
 
   const handleEditSubmit = () => {
     if (!editText.trim()) return;
@@ -29,12 +49,14 @@ const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete, onEdit }) => {
   }, [todo.created_at]);
 
   return (
-    <div className=" flex justify-between items-center p-3 rounded-lg shadow-sm bg-white">
+    <div className=" flex justify-between p-3 rounded-lg shadow-sm bg-white">
       {/* Main Todo item */}
-      <div>
+      <div
+        onClick={() => onToggle(todo.id)}
+        className="flex w-full flex-col hover:cursor-pointer gap-1"
+      >
         <span
-          onClick={() => onToggle(todo.id)}
-          className={`flex-1 cursor-pointer ${
+          className={`flex-1 ${
             todo.completed ? "line-through text-gray-400" : ""
           }`}
         >
@@ -42,7 +64,10 @@ const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete, onEdit }) => {
         </span>
         <p className="text-xs text-gray-400">Created: {formattedDate}</p>
       </div>
-      <div className="flex relative bg-background-400 p-1 rounded-sm">
+      <div
+        ref={optionsRef}
+        className="flex relative bg-background-400 p-1 rounded-sm hover:cursor-pointer h-fit"
+      >
         <img
           src={DotsIcon}
           className="h-4 w-4"
@@ -50,7 +75,7 @@ const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete, onEdit }) => {
           onClick={() => setShowOptions(!showOptions)}
         />
         {showOptions && (
-          <div className="flex flex-col absolute right-0 top-full bg-white border border-border-100 rounded-2xl">
+          <div className="flex flex-col absolute right-0 top-full bg-white border border-border-100 rounded-2xl z-10 shadow-xl">
             <span
               className="pl-3 py-2 pr-16 hover:cursor-pointer"
               onClick={() => setIsEditing(true)}

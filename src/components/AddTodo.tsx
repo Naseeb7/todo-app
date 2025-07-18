@@ -16,7 +16,10 @@ const AddTodo: React.FC<Props> = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col sm:flex-row gap-4 sm:gap-2 px-3 sm:px-10"
+    >
       <input
         type="text"
         className="flex-1 p-2 bg-white border border-gray-600 rounded-lg outline-none"
@@ -24,7 +27,7 @@ const AddTodo: React.FC<Props> = ({ onAdd }) => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <div className="w-1/6">
+      <div className="flex w-1/2 self-center sm:w-1/6">
         <Button type="submit" text="Add Task" />
       </div>
     </form>

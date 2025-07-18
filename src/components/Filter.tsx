@@ -8,12 +8,12 @@ interface Props {
 
 const Filter: React.FC<Props> = ({ currentFilter, onChange }) => {
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex sm:flex-col gap-3 w-full">
       {Filters.map((f) => (
         <div
           key={f.value}
           onClick={() => onChange(f.value)}
-          className={` flex w-full p-3 rounded-xl hover:cursor-pointer group text-lg font-semibold ${
+          className={` flex w-full py-2 sm:p-3 rounded-xl hover:cursor-pointer justify-center sm:justify-start group xs:text-lg font-semibold ${
             currentFilter === f.value ? "bg-background-200 " : "bg-white"
           }`}
         >

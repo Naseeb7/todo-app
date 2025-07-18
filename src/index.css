@@ -8,3 +8,14 @@
   --color-background-400: #f6f6f6;
   --color-border-100: #dddddd;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 10px;
+}
