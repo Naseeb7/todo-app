@@ -67,7 +67,7 @@ const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete, onEdit }) => {
 
       <div
         ref={optionsRef}
-        className="relative px-1 cursor-pointer flex h-fit bg-background-400 roundedxl"
+        className="relative p-1 cursor-pointer flex h-fit bg-background-400 rounded-xl"
       >
         <img
           src={DotsIcon}
